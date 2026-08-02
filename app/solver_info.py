@@ -17,8 +17,8 @@ class Puzzle:
 class Word:
     def __init__(self, word:str):
         self.word = word.casefold()
-        self.length=len(word)
-        self.letters=set([letter for letter in word])
+        self.length=len(self.word)
+        self.letters= {letter for letter in word}
 
     def __str__(self):
         return f"Word = {self.word}\nLength = {self.length}\nLetters = {self.letters}"
@@ -26,5 +26,6 @@ class Word:
 class Lexicon:
     def __init__(self, words: set):
         self.lex = words
+        self.len = len(self.lex)
 
 
