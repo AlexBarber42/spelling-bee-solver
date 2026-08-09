@@ -4,7 +4,7 @@ import pytest
 def test_puzzle():
     date1 = dt.date(2026, 7, 19)
 
-    puzzle2 = Puzzle(letters={'m', 'N', 'l', 'o', 'T', 'h'}, required_let='I')
+    puzzle2 = Puzzle(letters={'m', 'N', 'l', 'o', 'T', 'h', 'i'}, required_let='I')
     assert puzzle2.date == dt.date.today()
     assert len(puzzle2.letters) == 7
     assert puzzle2.letters == {'m', 'n', 'l', 'o', 't', 'h', 'i'}

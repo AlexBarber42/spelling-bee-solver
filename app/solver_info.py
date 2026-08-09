@@ -7,7 +7,7 @@ class Puzzle:
         self.date = puzzle_date
 
         self.letters = {letter.casefold() for letter in letters}
-        self.letters.add(self.required_let)
+        #self.letters.add(self.required_let)
         self.solutions = []
         self.pangrams = []
 
@@ -18,7 +18,7 @@ class Word:
     def __init__(self, word:str):
         self.word = word.casefold()
         self.length=len(self.word)
-        self.letters= {letter for letter in word}
+        self.letters= {letter for letter in self.word}
 
     def __str__(self):
         return f"Word = {self.word}\nLength = {self.length}\nLetters = {self.letters}"
