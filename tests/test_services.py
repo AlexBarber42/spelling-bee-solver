@@ -1,4 +1,4 @@
-from app.services import  *
+from app import *
 from db.mysql_repository import *
 
 services = Services()

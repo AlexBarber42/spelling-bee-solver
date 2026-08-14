@@ -1,5 +1,5 @@
 from db.repository import *
-from app.solver_info import *
+from model.solver_info import *
 import mysql.connector
 
 class MysqlRepository(Repository):
@@ -8,18 +8,20 @@ class MysqlRepository(Repository):
         config = {
             'user': 'root',
             'password': 'root',
-            #'host': 'db',
-            #'port': '3306',
-            'host': 'localhost', #run locally
-            'port': '32000', # run locally
+            'host': 'db',
+            'port': '3306',
+            #'host': 'localhost', #run locally
+            #'port': '32000', # run locally
             'database': 'bee'
         }
         self.connection = mysql.connector.connect(**config)
         self.cursor = self.connection.cursor()
 
     def __del__(self):
-        self.cursor.close()
-        self.connection.close()
+        if hasattr(self, "cursor"):
+            self.cursor.close()
+        if hasattr(self, "connection"):
+            self.connection.close()
 
     def load_lexicon(self):
         sql = "SELECT word FROM lexicon"

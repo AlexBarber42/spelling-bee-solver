@@ -1,4 +1,4 @@
-from app.solver_info import *
+from model.solver_info import *
 import pytest
 
 def test_puzzle():

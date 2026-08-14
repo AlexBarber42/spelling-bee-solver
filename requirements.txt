@@ -1,2 +1,5 @@
 pytest
 mysql-connector-python == 8.2.0
+Flask
+httpie
+flask_cors
