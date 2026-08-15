@@ -15,31 +15,37 @@
     </style>
 </head>
 <body>
-<h1>Enter Letters</h1>
+<h1>NYT Spelling Bee Puzzle Solver</h1>
+
+<h2>Enter Letters</h2>
 <form id="form">
     <div class="input-group">
         <label for="req">Required Letter: </label>
-        <input id="req" name="req" type="text" maxlength="1" size="2"/>
+        <input id="req" name="req" type="text" maxlength="1" size="2" required/>
         <br>
         <label for="let3">Letter 3: </label>
-        <input id="let3" name="let3" type="text" maxlength="1" size="2"/>
+        <input id="let3" name="let3" type="text" maxlength="1" size="2" required/>
         <br>
         <label for="let1">Letter 1: </label>
-        <input id="let1" name="let1" type="text" maxlength="1" size="2"/>
+        <input id="let1" name="let1" type="text" maxlength="1" size="2" required/>
         <br>
         <label for="let2">Letter 2: </label>
-        <input id="let2" name="let2" type="text" maxlength="1" size="2"/>
+        <input id="let2" name="let2" type="text" maxlength="1" size="2" required/>
         <br>
         <label for="let4">Letter 4: </label>
-        <input id="let4" name="let4" type="text" maxlength="1" size="2"/>
+        <input id="let4" name="let4" type="text" maxlength="1" size="2" required/>
         <br>
         <label for="let5">Letter 5: </label>
-        <input id="let5" name="let5" type="text" maxlength="1" size="2"/>
+        <input id="let5" name="let5" type="text" maxlength="1" size="2" required/>
         <br>
         <label for="let6">Letter 6: </label>
-        <input id="let6" name="let6" type="text" maxlength="1" size="2"/>
+        <input id="let6" name="let6" type="text" maxlength="1" size="2" required/>
+        <br>
+        <label for="puzzdate">Puzzle Date (Optional)</label>
+        <input id="puzzdate" type="date" name="puzzdate" value="2026-8-15">
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit">Solve Puzzle</button>
+    <button type="reset">Start Over</button>
 </form>
 
 <h2>Response: </h2>
@@ -60,6 +66,7 @@ async function handleSubmit(event) {
     value.let4 = data.get("let4");
     value.let5 = data.get("let5");
     value.let6 = data.get("let6");
+    value.puzzdate = data.get("puzzdate");
     console.log({value});
 
     const response = await fetch('http://localhost:5000/puzzle', {
@@ -72,9 +79,11 @@ async function handleSubmit(event) {
     const myJson = await response.json();
     console.log(myJson);
     document.getElementById('response').textContent = JSON.stringify(myJson, undefined, 2);
+    document.getElementById("form").reset();
 }
 const form1 = document.getElementById("form");
 form1.addEventListener("submit", async (e) => handleSubmit(e), false);
+
 </script>
 
 </html>

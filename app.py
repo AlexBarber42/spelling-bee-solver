@@ -40,10 +40,10 @@ def puzzle():
     let4 = data["let4"]
     let5 = data["let5"]
     let6 = data["let6"]
+    puzz_date = data["puzzdate"]
 
-    required_let = req_let
     letters = {req_let, let1, let2, let3, let4, let5, let6}
-    solutions = services.get_solutions(services.create_puzzle(required_let, letters))
+    solutions = services.get_solutions(services.create_puzzle(req_let, letters, puzz_date))
     return jsonify(solutions)
 @app.route("/history", methods=["GET"])
 def get_history():
