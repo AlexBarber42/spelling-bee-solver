@@ -45,20 +45,24 @@ def puzzle():
     letters = {req_let, let1, let2, let3, let4, let5, let6}
     solutions = services.get_solutions(services.create_puzzle(req_let, letters, puzz_date))
     return jsonify(solutions)
+
 @app.route("/history", methods=["GET"])
 def get_history():
     try:
         hist = services.load_puzzle_history()
+        app.logger.info(f"History loaded: {hist}")
         data = [
             {
-                "letters": puzz.letters,
-                "required_letter": puzz.required_let,
-                "date": puzz.date
+                "letters": letters,
+                "required_letter": required_letter,
+                "date": date
             }
-        for puzz in hist
+            for letters, required_letter, date in hist
         ]
+        app.logger.info(f"Returning history: {data}")
         return jsonify(data), HTTPStatus.OK
     except Exception as e:
+        app.logger.exception("Failed to get history")
         return jsonify({
             "error": f"Failed to get puzzle history: {e}"
         }), HTTPStatus.INTERNAL_SERVER_ERROR

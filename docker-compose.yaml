@@ -5,13 +5,21 @@ services:
       - db
     ports:
       - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: mysql:5.7
     ports:
       - "32000:3306"
     environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./data:/docker-entrypoint-initdb.d/:ro
-  
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--password=root"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
