@@ -20,6 +20,9 @@ class Services:
             if word.length not in sols:
                 sols[word.length] = []
             sols[word.length].append(word.word)
+        for key in sols.keys():
+            if key != 1:
+                sols[key] = sorted(sols[key])
         letters=list(puzzle.letters)
         let_string=''.join(letters)
         sols[1] = {"Letters: ": let_string, "Pangrams: ": puzzle.pangrams, "Puzzle Date: ": puzzle.date}
@@ -30,3 +33,4 @@ class Services:
 
     def load_puzzle_history(self):
         return self.repo.get_puzzle_history()
+
