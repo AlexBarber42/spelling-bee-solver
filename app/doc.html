@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NYT Spelling Bee Puzzle Solver</title>
+    <style>
+      body {
+        background-color: darkgrey;
+        margin: 0 10%;
+        }
+    </style>
+</head>
+<body>
+
+<h1>NYT Spelling Bee Solver</h1>
+
+<h2>Methods</h2>
+
+<h3>Solve a Puzzle</h3>
+<div>
+<p>Endpoint: http://localhost:5000/puzzle</p>
+<p>Request type: POST</p>
+<p>Request body: JSON-formatted inputs</p>
+<pre>
+    {
+    "req": "c",
+    "let1": "b",
+    "let2": "d",
+    "let3": "o",
+    "let4": "e",
+    "let5": "l",
+    "let6": "u",
+    "puzzdate": "2026-08-16"
+    }
+</pre>
+<p>Response: JSON with Puzzle Solutions</p>
+<pre>
+
+  "1": {
+    "Letters: ": "ldobeuc",
+    "Pangrams: ": [
+      "becloud",
+      "beclouded"
+    ],
+    "Puzzle Date: ": "2026-08-16"
+  },
+  "4": [
+    "bloc",
+    "cede",
+    "cell",
+    "clod",
+    "club",
+    "clue",
+    "cobb",
+    "code",
+    "coed",
+    "cold",
+    "cool",
+    "cube",
+    "cued",
+    "cull",
+    "deco",
+    "loco"
+  ],
+  "5": [
+    "bocce",
+    "ceded",
+    "celeb",
+    "cello",
+    "cloud",
+    "clued",
+    "coded",
+    "cooed",
+    "could",
+    "cubed",
+    "deuce",
+    "educe"
+  ],
+  "6": [
+    "boucle",
+    "celled",
+    "cobble",
+    "coddle",
+    "cooled",
+    "coulee",
+    "cuddle",
+    "culled",
+    "decode",
+    "deduce",
+    "educed"
+  ],
+  "7": [
+    "clouded",
+    "clubbed",
+    "cobbled",
+    "coddled",
+    "collude",
+    "cuddled",
+    "occlude",
+    "decoded",
+    "deduced",
+    "becloud",
+    "cellule"
+  ],
+  "8": [
+    "colluded",
+    "occluded"
+  ],
+  "9": [
+    "beclouded"
+  ]
+}
+</pre>
+</div>
+
+<h3>Get User History</h3>
+<div>
+<p>Endpoint: http://localhost:5000/history</p>
+<p>Request type: GET</p>
+<p>Response: </p>
+<pre>
+    Sun, 16 Aug 2026 | Letters: b d o l e c u | Required Letter: c
+</pre>
+</div>
+</body>
+</html>

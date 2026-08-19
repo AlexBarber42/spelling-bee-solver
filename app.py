@@ -26,8 +26,10 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 cors = CORS(app)
 services = Services()
 @app.route('/')
-def hello_world():
-    print("hello world")
+def doc():
+    app.logger.info("doc - Got request")
+    with open("app/doc.html", "r") as f:
+        return f.read()
 
 @app.route("/puzzle", methods=["POST"])
 def puzzle():
