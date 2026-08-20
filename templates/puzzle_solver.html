@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NYT Spelling Bee Solver</title>
+    <style>
+    body {
+        background-color: darkgrey;
+        margin: 0 10%;
+    }
+    input {
+        background-color: gold;
+    }
+    </style>
+</head>
+
+<body>
+<h1>NYT Spelling Bee Puzzle Solver</h1>
+
+<h2>Enter Letters</h2>
+
+<form id="form">
+    <div class="input-group">
+        <label for="req">Required Letter: </label>
+        <input id="req" name="req" type="text" maxlength="1" size="2" required/>
+        <br>
+        <label for="let1">Outer Letter 1: </label>
+        <input id="let1" name="let1" type="text" maxlength="1" size="2" required/>
+        <br>
+        <label for="let2">Outer Letter 2: </label>
+        <input id="let2" name="let2" type="text" maxlength="1" size="2" required/>
+        <br>
+        <label for="let3">Outer Letter 3: </label>
+        <input id="let3" name="let3" type="text" maxlength="1" size="2" required/>
+        <br>
+        <label for="let4">Outer Letter 4: </label>
+        <input id="let4" name="let4" type="text" maxlength="1" size="2" required/>
+        <br>
+        <label for="let5">Outer Letter 5: </label>
+        <input id="let5" name="let5" type="text" maxlength="1" size="2" required/>
+        <br>
+        <label for="let6">Outer Letter 6: </label>
+        <input id="let6" name="let6" type="text" maxlength="1" size="2" required/>
+        <br>
+        <label for="puzzdate">Puzzle Date</label>
+        <input id="puzzdate" type="date" name="puzzdate" value="2026-08-20">
+    </div>
+    <button type="submit">Solve Puzzle</button>
+    <button type="reset">Start Over</button>
+    <button type="button" name="button" id="button">Get User History</button>
+</form>
+
+<h2>Solutions: </h2>
+<pre id="response"></pre>
+
+<h2>History:</h2>
+<div id="history"></div>
+</body>
+
+<script>
+async function handleSubmit(event) {
+    event.preventDefault();
+
+    const data = new FormData(event.target);
+    const value = Object.fromEntries(data.entries());
+    value.req = data.get("req");
+    value.let1 = data.get("let1");
+    value.let2 = data.get("let2");
+    value.let3 = data.get("let3");
+    value.let4 = data.get("let4");
+    value.let5 = data.get("let5");
+    value.let6 = data.get("let6");
+    value.puzzdate = data.get("puzzdate");
+    console.log({value});
+
+    const response = await fetch('http://localhost:5000/puzzle', {
+        method: 'POST',
+        body: JSON.stringify(value),
+        headers: {
+            'Content-Type': 'application/json',
+            }
+        });
+    const myJson = await response.json();
+    console.log(myJson);
+
+    const display = document.getElementById('response');
+    display.innerHTML = "";
+    const list = document.createElement("ul");
+
+    Object.entries(myJson).forEach(([length, words]) => {
+        const heading = document.createElement("h3");
+        heading.textContent = `${length} letter asdf:`;
+        list.appendChild(heading);
+        if (length === '1') {
+            heading.textContent = `Puzzle Information:`;
+            list.appendChild(heading);
+            const item = document.createElement("li");
+            item.textContent = `Required Letter: ${value.req}`;
+            list.appendChild(item);
+            Object.entries(words).forEach(([key, val]) => {
+
+                const item = document.createElement("li");
+                item.textContent = `${key} ${val}`;
+                list.appendChild(item);
+            });
+        } else {
+            heading.textContent = `${length} letter words:`;
+            list.appendChild(heading);
+            words.forEach(word => {
+                const item = document.createElement("li");
+                item.textContent = word;
+                list.appendChild(item);
+            });
+        }
+    });
+
+    display.appendChild(list);
+
+    document.getElementById("form").reset();
+}
+
+const form1 = document.getElementById("form");
+form1.addEventListener("submit", async (e) => handleSubmit(e), false);
+
+document.getElementById("button").addEventListener("click", async function () {
+    try {
+        const response = await fetch("http://localhost:5000/history");
+
+        if (!response.ok) {
+            throw new Error("Failed to get history");
+        }
+
+        const history = await response.json();
+
+        const resp = document.getElementById("response");
+        resp.innerHTML = "";
+
+        const display = document.getElementById("history");
+        display.innerHTML = "";
+
+        if (history.length === 0) {
+            display.textContent = "No history yet.";
+            return;
+        }
+
+        const list = document.createElement("ul");
+
+        history.forEach(puzz => {
+            const item = document.createElement("li");
+            const date = puzz.date.split(" ");
+            const d1 = date.pop()
+            const d2 = date.pop()
+            const date1 = date.join(" ")
+            const letters = puzz.letters.split("").join(" ");
+            item.textContent =
+                `${date1}  |  Letters: ${letters}  |  ` +
+                `Required Letter: ${puzz.required_letter}`;
+
+            list.appendChild(item);
+        });
+
+        display.appendChild(list);
+
+    } catch (error) {
+        console.error(error);
+        document.getElementById("history").textContent =
+            "Could not load history.";
+    }
+});
+
+</script>
+
+</html>

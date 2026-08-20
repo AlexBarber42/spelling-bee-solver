@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS, cross_origin
 from http import HTTPStatus
 from logging.config import dictConfig
@@ -25,7 +25,13 @@ app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
 cors = CORS(app)
 services = Services()
-@app.route('/')
+
+@app.route('/', methods=['GET'])
+def ui():
+    app.logger.info("ui - Got request")
+    return render_template('puzzle_solver.html')
+
+@app.route('/doc', methods=['GET'])
 def doc():
     app.logger.info("doc - Got request")
     with open("app/doc.html", "r") as f:
