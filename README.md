@@ -4,7 +4,9 @@
 This is an app to solve a NYT Spelling Bee puzzle. The user enters the letters and date of a puzzle, and the app will return a list of valid solutions. The user can also view a summary of the puzzles they have solved using the app.
 
 ## Running the App
-To run the app, clone this github repo. From within the root directory, run `docker compose up`. This will set up the docker containers for the database and the app. Once a connection is established, you can open the `puzzle_solver.html` file in a browser to use the app with the UI. You can also submit requests without the UI using `curl` or tools like Postman. Detailed information about these requests can be found in `docs/documentation.md`. 
+To run the app, clone this github repo. From within the root directory, run `docker compose up`. This will set up the docker containers for the database and the app. Once a connection is established, 
+open a browser and navigate to `localhost:5000/` to access the UI. This can also be accessed by opening the `puzzle_solver.html` file in a browser.
+You can submit requests without the UI using `curl` or tools like Postman. Detailed information about these requests can be found in `docs/documentation.md` or by navigating to `localhost:5000/doc` in the browser. 
 
 ## Acknowledgements
 This app incorporates code from LING508 course materials. In particular, I referenced Jeff Berry's and Jackson Mostoller's example projects.  
