@@ -27,6 +27,7 @@ class Services:
         let_string=''.join(letters)
         sols[1] = {"Letters: ": let_string, "Pangrams: ": puzzle.pangrams, "Puzzle Date: ": puzzle.date}
         return sols
+
     def save_user_puzzle(self, puzzle: Puzzle):
         return self.repo.save_puzzle(puzzle)
 

@@ -5,7 +5,6 @@ class Puzzle:
 
         self.required_let = required_let.casefold()
         self.date = puzzle_date
-
         self.letters = {letter.casefold() for letter in letters}
         self.solutions = []
         self.pangrams = []
